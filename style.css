@@ -1,0 +1,15 @@
+* {border: 0; margin: 0; padding: 0; text-align: center; overflow: hidden;}
+
+#bet {width: 100vw; height: 100vh; background: #fff;}
+#bet > p {font-size: 50px;}
+#input {width: 200px; height: 50px; border: 2px solid #000;}
+#up {width: 50px; height: 30px; border: 2px solid #000; border-radius: 100px; background: #fff;}
+#down {width: 50px; height: 30px; border: 2px solid #000; border-radius: 100px; background: #fff; pointer-events: none;}
+#start {width: 50px; height: 30px; border: 2px solid #000; border-radius: 100px; background: #fff;}
+
+#betPrice {position: fixed; left: 50px; top: 50px; font-size: 24px; display: none;}
+
+#player, #dealer {width: 100vw; height: 40vh; display: flex; align-items: center; justify-content: center;}
+#player > div, #dealer > div {width: 10vw; height: 10vh;}
+
+#hit, #stand {width: 80px; height: 30px; border: 2px solid #000; border-radius: 100px; background: #fff; margin: 0 10px;}

@@ -17,7 +17,7 @@ deck = [];
 d_deck = [];
 p_deck = [];
 total = [0,0,0,0] //플레이어 토탈, 딜러 토탈, 플레이어 A 수, 딜러 A 수
-A_case = {"1":[1,10],"2":[2,11,20],"3":[3,12,21],"4":[4,13]}
+A_case = {1:[1,10],2:[2,11,20],3:[3,12,21],4:[4,13]}
 winning_count = 0;
 for (i = 0; i < 13; i++) {
     deck.push("h" + numbers[i]);
@@ -76,8 +76,8 @@ function sum_total(a,types) {
     }
     if (types == 1) {
         let temp = [];
-        for(i = 0;i<A_case[[-1]].length;i++) {
-            temp.push((total(types) + A_case[[-1]][i]) <= 21? (total(types) + A_case[[-1]][i]) : 0)
+        for(i = 0;i<A_case[[3]].length;i++) {
+            temp.push((total[1] + A_case[total[3]][i]) <= 21? (total(types) + A_case[total[3]][i]) : 0)
         }
         total[types] = Math.max(temp)
     }
@@ -95,9 +95,9 @@ function start() {
 
     // 플레이어에게 deck의 카드 지급(iArray[0]~iArray[25]: 플레이어 카드)
     for (x = 0; x < 2; x++) {
-        $("#player").append("<div>" + deck[0] + "</div>");
+        $("#player").append("<div><p>" + deck[0] + "</p><img src='./files/" + deck[0] + ".svg'></div>");
         p_deck.push(deck[0]);
-        if (deck[0] == 'A') {
+        if (deck[0].endsWith('A')) {
             total[2] += 1
         }
         deck.shift();
@@ -106,13 +106,13 @@ function start() {
     $("#currentPoint > p:nth-of-type(1)").empty()
     $("#currentPoint > p:nth-of-type(1)").append(total[0])
     $("#currentPoint > p:nth-of-type(2)").empty()
-    $("#currentPoint > p:nth-of-type(2)").append(total[2])
+    $("#currentPoint > p:nth-of-type(2)").append("A " + total[2] + "개")
     // 딜러에게 deck의 카드 지급
     for (y = 0; y < 2; y++) {
         $("#bet").css("display", "none");
-        $("#dealer").append("<div>" + deck[0] + "</div>");
+        $("#dealer").append("<div><p>" + deck[0] + "</p><img src='./files/" + deck[0] + ".svg'></div>");
         d_deck.push([0]);
-        if (deck[0] == 'A') {
+        if (deck[0].endsWith('A')) {
             total[3] += 1
         }
         deck.shift();
@@ -123,27 +123,33 @@ function start() {
 function hit() {
 
     // 플레이어에게 deck의 카드 지급
-    $("#player").append("<div>" + deck[0] + "</div>");
+    $("#player").append("<div><p>" + deck[0] + "</p><img src='./files/" + deck[0] + ".svg'></div>");
     p_deck.push(deck[0])
-    if (deck[0] == 'A') {
+    if (deck[0].endsWith('A')) {
         total[2] += 1
     }
     deck.shift();
     sum_total(p_deck,0)
     $("#currentPoint > p:nth-of-type(1)").empty()
     $("#currentPoint > p:nth-of-type(1)").append(total[0])
-    console.log(total[2])
     $("#currentPoint > p:nth-of-type(2)").empty()
-    $("#currentPoint > p:nth-of-type(2)").append(total[2])
+    $("#currentPoint > p:nth-of-type(2)").append("A " + total[2] + "개")
     //21 넘을 시 게임 종료
 }
 
 function stand() {    
-    $("#selectPoint").css("display", "block");
-    $("#selectPoint").append(A_case[total[2]]);
-    p_deck = p_deck.filter((element) => element != 'hA'&&element != 'sA'&&element != 'dA' && element != 'cA')
-    p_deck.push('h'+10)
-    sum_total(p_deck,0)
+    $("#selectPoint").css("display", "flex");
+    for(i=0;i<A_case[total[2]].length;i++){
+        $("#selectPoint").append("<button id='"+ i + "' onclick='selectPoint(this.id)'>" + A_case[total[2]][i] + "점</button>")
+    }
+}
+function selectPoint(value){
+    // $("#selectPoint").css("display", "none")
+    p_deck.push('h'+A_case[total[2]][value]);
+    p_deck = p_deck.filter((element) => element != 'hA'&&element != 'sA'&&element != 'dA' && element != 'cA');
+    sum_total(p_deck,0);
+    $("#currentPoint > p:nth-of-type(1)").empty()
+    $("#currentPoint > p:nth-of-type(1)").append(total[0])
 }
 
 function dealer_action() {
@@ -151,7 +157,7 @@ function dealer_action() {
     while (total[1]<16) {
         d_deck.push(deck[0]);
         $("#dealer").append("<div>" + deck[0] + "</div>");
-        if (deck[0] == 'A') {
+        if (deck[0].endsWith('A')) {
             total[3] += 1
         }
         sum_total(d_deck,1)

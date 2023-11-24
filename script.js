@@ -95,7 +95,6 @@ function start() {
     $("#playerPoint").css("display", "block");
     $("#hit").css("display", "block");
     $("#stand").css("display", "block");
-    $("#dealerPoint").css("display", "block");
     $("#buttons").css("display", "block");
 
     // 플레이어에게 deck의 카드 지급
@@ -146,6 +145,7 @@ function hit() {
 }
 
 function stand() {
+    $("#dealerPoint").css("display", "block");
     if (total[2]!=0) {
         $("#selectPoint").css("display", "flex");
         for(i=0;i<A_case[total[2]].length;i++){

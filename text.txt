@@ -22,3 +22,6 @@ start(): 게임 시작하기
 hit(): HIT(카드 더 뽑기)
 stand(): STAND(게임 끝내기)
 shuffle(): 게임 시작 전 카드 순서 랜덤으로 섞기 - 아직 html에 추가 X
+
+./files/back.svg
+$("#dealer > div > img:nth-of-type(?)").remove()

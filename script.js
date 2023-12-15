@@ -73,7 +73,7 @@ function sum_total(a,types) {
     }
     if (types == 1) {
         minscore = 0
-        minscore = total[0] + total[3]
+        minscore = total[1] + total[3]
     
         if (total[3] != 0) {
             let temp = [];
@@ -156,7 +156,7 @@ function stand() {
             if(total[0]+A_case[total[2]][i]>21) {
                 continue//warn
             }
-            $("#selectPoint").append("<button id='"+ i + "' onclick='selectPoint(this.id)'>" + A_case[total[2]][i] + "점</button>");
+            $("#selectPoint > div").append("<button id='"+ i + "' onclick='selectPoint(this.id)'>" + A_case[total[2]][i] + "점</button>");
         }
     } else {
         sum_total(d_deck, 1)
@@ -223,7 +223,7 @@ function game_result(status) {
     if (status == 0) {
         $("#result").html("딜러 승리<br>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점")
     } else if (status == 1) {
-        $("#result").html("플레이어 승리<br>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점<br>+"+inputValue);
+        $("#result").html("플레이어 승리<br>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점<br> + " + inputValue);
     }
     $("#over_page").css("display", "block");
     $("#result").css("display", "block");

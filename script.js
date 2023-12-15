@@ -204,28 +204,28 @@ function dealer_action() {
             sum_total(d_deck,1)
             $("#dealerPoint > p:nth-of-type(1)").empty()
             $("#dealerPoint > p:nth-of-type(1)").append(total[1])
-            var timer = setTimeout(function(){dealer_action()},1700)
+            var timer = setTimeout(function(){dealer_action()},1400)
         }
         if (total[1]>=17 && !softhit) {
             console.log(blackjack)
             if (blackjack[0]>blackjack[1]) {
                 clearTimeout(timer)
-                setTimeout(function(){game_result(3)},1700)
+                setTimeout(function(){game_result(3)},1400)
             } else if (blackjack[0]<blackjack[1]) {
                 clearTimeout(timer)
-                setTimeout(function(){game_result(2)},1700)
+                setTimeout(function(){game_result(2)},1400)
             } else if (total[1]>21) {
                 clearTimeout(timer)
-                setTimeout(function(){game_result(1)},1700) 
+                setTimeout(function(){game_result(1)},1400) 
             } else if (total[0] < total[1]) {
                 clearTimeout(timer)
-                setTimeout(function(){game_result(0)},1700)
+                setTimeout(function(){game_result(0)},1400)
             } else if(total[0]==total[1] || blackjack == [1,1]) {
                 clearTimeout(timer)
-                setTimeout(function(){game_result(-1)},1700)
+                setTimeout(function(){game_result(-1)},1400)
             } else {
                 clearTimeout(timer)
-                setTimeout(function(){game_result(1)},1700)
+                setTimeout(function(){game_result(1)},1400)
             }
         }
     })

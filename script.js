@@ -82,7 +82,7 @@ function sum_total(a,types) {
         }
     }
     if (types == 1) {
-        if (total[3] == 1 && total[1][0].substring(1)=='6' && a.length==2) {
+        if (total[3] == 1 && total[1]==6 && a.length==2) {
             softhit = true
         } else {
             softhit = false

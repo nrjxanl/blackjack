@@ -256,9 +256,9 @@ function game_result(status) {
         $("#result").html("<p>플레이어 승리</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><p>+ " + inputValue + "</p><button onclick='reset()'>다시 시작하기</button>")
     } else if(status>1) {
         if (status == 2) {
-            $("#result").html("<p>딜러 승리</p><p>딜러: blackjack</p>")
+            $("#result").html("<p>딜러 승리</p><p>딜러: blackjack</p><button onclick='reset()'>다시 시작하기</button>")
         } else {
-            $("#result").html("<p>플레이어 승리</p><p>플레이어: blackjack</p>")
+            $("#result").html("<p>플레이어 승리</p><p>플레이어: blackjack</p><button onclick='reset()'>다시 시작하기</button>")
         }
     } else {
         $("#result").html("<p>무승부</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><button onclick='reset()'>다시 시작하기</button>")

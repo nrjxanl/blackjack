@@ -18,7 +18,6 @@ function shuffle(array) {
     array.sort(() => Math.random() - 0.5);
 }
 
-
 // 베팅 금액 초기값을 100원으로 지정 - inputValue
 window.onload = function() {
     inputValue = 100;
@@ -141,14 +140,22 @@ function hit() {
     //21 넘을 시 게임 종료
     if (total[0]+total[2] > 21) {
         game_result(0)
+        return//warn
     }
 }
 
 function stand() {
+    if (total[0]+total[2] > 21) {
+        game_result(0)
+        return//warn
+    }
     $("#dealerPoint").css("display", "block");
     if (total[2]!=0) {
         $("#selectPoint").css("display", "flex");
         for(i=0;i<A_case[total[2]].length;i++){
+            if(total[0]+A_case[total[2]][i]>21) {
+                continue//warn
+            }
             $("#selectPoint").append("<button id='"+ i + "' onclick='selectPoint(this.id)'>" + A_case[total[2]][i] + "점</button>");
         }
     } else {
@@ -216,7 +223,7 @@ function game_result(status) {
     if (status == 0) {
         $("#result").html("딜러 승리<br>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점")
     } else if (status == 1) {
-        $("#result").html("플레이어 승리<br>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점<br>+"+inputvalue);
+        $("#result").html("플레이어 승리<br>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점<br>+"+inputValue);
     }
     $("#over_page").css("display", "block");
     $("#result").css("display", "block");
@@ -227,5 +234,3 @@ function game_result(status) {
     $("#hit").css("display", "none");
     $("#stand").css("display", "none");
 } // reset() 넣어야 함
-
-

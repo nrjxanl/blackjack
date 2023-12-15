@@ -77,7 +77,7 @@ function sum_total(a,types) {
         if(types == 0) {
             $("#playerPoint > p").empty()
             $("#playerPoint > p").append("blackjack")
-            stand()
+            setTimeout(function(){dealer_action()},1500)
             return
         }
     }
@@ -92,7 +92,7 @@ function sum_total(a,types) {
             for(i = 0;i<A_case[total[3]].length;i++) {
                 temp.push(total[1] + A_case[total[3]][i] <= 21? (total[1] + A_case[total[3]][i]) : 0)
             }
-            total[1] = Math.max.apply(null, temp) == 0 ? total[1] + total[3] : Math.max.apply(null, temp)
+            total[1] = Math.max.apply(null, temp) == 0? total[1]+total[3] : Math.max.apply(null, temp) //total[1] == 0이면 딜러 패배 처리 필요
         }
     }
 }
@@ -173,7 +173,6 @@ function stand() {
             $("#selectPoint > div").append("<button id='"+ i + "' onclick='selectPoint(this.id)'>" + A_case[total[2]][i] + "점</button>")
         }
     } else {
-        sum_total(d_deck, 1)
         setTimeout(function(){dealer_action()},1500)
     }
 }
@@ -201,27 +200,28 @@ function dealer_action() {
             sum_total(d_deck,1)
             $("#dealerPoint > p:nth-of-type(1)").empty()
             $("#dealerPoint > p:nth-of-type(1)").append(total[1])
-            var timer = setTimeout(function(){dealer_action()},1500)
+            var timer = setTimeout(function(){dealer_action()},1700)
         }
-        if ((total[1]>=17||total[1]==0) && !softhit) {
-            if (blackjack == [1,0]) {
+        if (total[1]>=17 && !softhit) {
+            console.log(blackjack)
+            if (blackjack[0]>blackjack[1]) {
                 clearTimeout(timer)
-                setTimeout(function(){game_result(3)},1500)
-            } else if (blackjack == [0,1]) {
+                setTimeout(function(){game_result(3)},1700)
+            } else if (blackjack[0]<blackjack[1]) {
                 clearTimeout(timer)
-                setTimeout(function(){game_result(2)},1500)
+                setTimeout(function(){game_result(2)},1700)
             } else if (total[1]>21) {
                 clearTimeout(timer)
-                setTimeout(function(){game_result(1)},1500) 
+                setTimeout(function(){game_result(1)},1700) 
             } else if (total[0] < total[1]) {
                 clearTimeout(timer)
-                setTimeout(function(){game_result(0)},1500)
+                setTimeout(function(){game_result(0)},1700)
             } else if(total[0]==total[1] || blackjack == [1,1]) {
                 clearTimeout(timer)
-                setTimeout(function(){game_result(-1)},1500)
+                setTimeout(function(){game_result(-1)},1700)
             } else {
                 clearTimeout(timer)
-                setTimeout(function(){game_result(1)},1500)
+                setTimeout(function(){game_result(1)},1700)
             }
         }
     })
@@ -251,7 +251,7 @@ function game_result(status) {
     } else if (status == 1) {
         $("#result").html("<p>플레이어 승리</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><p>+ " + inputValue + "</p><button onclick='reset()'>다시 시작하기</button>")
     } else if(status>1) {
-        if (stauts == 2) {
+        if (status == 2) {
             $("#result").html("<p>딜러 승리</p><p>딜러: blackjack</p>")
         } else {
             $("#result").html("<p>플레이어 승리</p><p>플레이어: blackjack</p>")

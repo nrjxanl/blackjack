@@ -4,7 +4,8 @@ deck = [];
 d_deck = [];
 p_deck = [];
 total = [0,0,0,0] //플레이어 토탈, 딜러 토탈, 플레이어 A 수, 딜러 A 수
-A_case = {1:[1,10],2:[2,11,20],3:[3,12,21],4:[4,13]}
+A_case = {1:[1,11],2:[2,12],3:[3,13],4:[4,14]}
+blackjack = [0,0]
 for (i = 0; i < 13; i++) {
     deck.push("h" + numbers[i]);
     deck.push("c" + numbers[i]);
@@ -57,7 +58,7 @@ function down() {
     }
 }
 
-minscore = 0
+softhit = false
 function sum_total(a,types) {
     total[types] = 0
     tem = ''
@@ -71,10 +72,21 @@ function sum_total(a,types) {
             continue;
         }
     }
+    if (total[types+2]==1 && total[types] ==10 && a.length()==2){
+        blackjack[types] = 1            
+        if(types == 0) {
+            $("#playerPoint > p").empty()
+            $("#playerPoint > p").append(total[0] + "점 + A " + total[2] + "개")
+            stand()
+            return
+        }
+    }
     if (types == 1) {
-        minscore = 0
-        minscore = total[1] + total[3]
-    
+        if (total[3] == 1 && total[1][0].substring(1)=='6' && a.length()==2) {
+            softhit = true
+        } else {
+            softhit = false
+        }    
         if (total[3] != 0) {
             let temp = [];
             for(i = 0;i<A_case[total[3]].length;i++) {
@@ -119,6 +131,8 @@ function start() {
     }
     sum_total(d_deck,1)
 
+    $("#dealer > div:nth-of-type(2)").append("<img src='./files/back.svg'>")
+
     $("#playerPoint > p").empty()
     $("#playerPoint > p").append(total[0] + "점 + A " + total[2] + "개")
 
@@ -145,11 +159,11 @@ function hit() {
 }
 
 function stand() {
+    $("#dealerPoint").css("display", "block");
     if (total[0]+total[2] > 21) {
         game_result(0)
         return//warn
     }
-    $("#dealerPoint").css("display", "block");
     if (total[2]!=0) {
         $("#selectPoint").css("display", "flex");
         for(i=0;i<A_case[total[2]].length;i++){
@@ -176,29 +190,39 @@ function selectPoint(value){
 }
 
 function dealer_action() {
-    if (total[1]+minscore<31 && total[1] != 0) {
-        d_deck.push(deck[0]);
-        $("#dealer").append("<div><p>" + deck[0] + "</p><img src='./files/" + deck[0] + ".svg'></div>");
-        if (deck[0].endsWith('A')) {
-            total[3] += 1
+    $("#dealer > div:nth-of-type(2) > img:nth-of-type(2)").animate({opacity: 0}, 300, function() {
+        if ((total[1]<17||softhit) && total[1]!=0) {
+            d_deck.push(deck[0]);
+            $("#dealer").append("<div><p>" + deck[0] + "</p><img src='./files/" + deck[0] + ".svg'></div>");
+            if (deck[0].endsWith('A')) {
+                total[3] += 1
+            }
+            deck.shift()
+            sum_total(d_deck,1)
+            $("#dealerPoint > p:nth-of-type(1)").empty()
+            $("#dealerPoint > p:nth-of-type(1)").append(total[1])
+            var timer = setTimeout(function(){dealer_action()},1500)
         }
-        deck.shift()
-        sum_total(d_deck,1)
-        $("#dealerPoint > p:nth-of-type(1)").empty()
-        $("#dealerPoint > p:nth-of-type(1)").append(total[1])
-        var timer = setTimeout(function(){dealer_action()},1500)
-    }
-    console.log(total)
-    if (total[1]>21) {
-        clearTimeout(timer)
-        setTimeout(function(){game_result(1)},1500)
-    } else if (total[0] <= total[1]) {
-        clearTimeout(timer)
-        setTimeout(function(){game_result(0)},1500)
-    } else {
-        clearTimeout(timer)
-        setTimeout(function(){game_result(1)},1500)
-    }
+        if (blackjack == [1,0]) {
+            clearTimeout(timer)
+            setTimeout(function(){game_result(3)},1500)
+        } else if (blackjack == [0,1]) {
+            clearTimeout(timer)
+            setTimeout(function(){game_result(2)},1500)
+        } else if (total[1]>21) {
+            clearTimeout(timer)
+            setTimeout(function(){game_result(1)},1500)
+        } else if (total[0] < total[1]) {
+            clearTimeout(timer)
+            setTimeout(function(){game_result(0)},1500)
+        } else if(total[0]==total[1] || blackjack == [1,1]) {
+            clearTimeout(timer)
+            setTimeout(function(){game_result(-1)},1500)
+        } else {
+            clearTimeout(timer)
+            setTimeout(function(){game_result(1)},1500)
+        }
+    })
 }
 
 function reset() {
@@ -221,16 +245,27 @@ function reset() {
 
 function game_result(status) {
     if (status == 0) {
-        $("#result").html("딜러 승리<br>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점")
+        $("#result").html("<p>딜러 승리</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><button onclick='reset()'>다시 시작하기</button>")
     } else if (status == 1) {
-        $("#result").html("플레이어 승리<br>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점<br> + " + inputValue);
+        $("#result").html("<p>플레이어 승리</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><p>+ " + inputValue + "</p><button onclick='reset()'>다시 시작하기</button>");
+    } else if(status>1) {
+        if (stauts == 2) {
+            $("#result").html("<p>딜러 승리</p><p>딜러: blackjack</p>")
+        } else {
+            $("#result").html("<p>플레이어 승리</p><p>플레이어: blackjack</p>")
+        }
+    } else {
+        $("#result").html("<p>무승부</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p>")
     }
-    $("#over_page").css("display", "block");
-    $("#result").css("display", "block");
+    $("#result").css("display", "flex");
 
     $("#betPrice").css("display", "none");
     $("#playerPoint").css("display", "none");
     $("#dealerPoint").css("display", "none");
     $("#hit").css("display", "none");
     $("#stand").css("display", "none");
-} // reset() 넣어야 함
+}
+
+function reset() {
+    window.location.reload()
+}

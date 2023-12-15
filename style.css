@@ -14,6 +14,9 @@
 #player > div > p, #dealer > div > p {display: none;}
 #player > div > img, #dealer > div > img {width: 80px;}
 
+#dealer > div:nth-of-type(2) > img:nth-of-type(1) {position: relative;}
+#dealer > div:nth-of-type(2) > img:nth-of-type(2) {position: absolute; margin-left: -80px;}
+
 #buttons {width: 20vw; height: 30vh; position: fixed; top: 35vh; right: 10vw; display: flex; flex-direction: column; align-items: center; display: none;}
 #hit, #stand {width: 150px; height: 60px; margin: calc(7.5vh - 30px) 0; border: 3px solid white; border-radius: 100px; background: #00472f; padding: 5px 15px; font-size: 20px; font-weight: bold; display: none;}
 
@@ -27,5 +30,8 @@
 #selectPoint > div {padding-top: 30px;}
 #selectPoint > div > button {width: 100px; height: 50px; background: none; border: 3px solid white; margin: 0 10px; border-radius: 50px; font-weight: bold; font-size: 18px;}
 
-#over_page {width: 100vw; height: 100vh; background: #00472f; display: none;}
-#result {width: 60vw; height: 60vh; position: fixed; background: #00472fee; top: 20vh; left: 20vw; font-size: 24px; display: none; padding: 15px; border: 3px solid white; border-radius: 5vw; font-weight: bold;}
+#result {width: 100vw; height: 30vh; position: fixed; background: #00472fee; top: 35vh; left: 0; font-size: 24px; display: none; font-weight: bold; justify-content: center; flex-direction: column;}
+#result > p:nth-of-type(1) {font-size: 32px;}
+#result > p:nth-of-type(2) {margin-top: 30px; line-height: 1.6;}
+#result > p:nth-of-type(3) {height: 100vh; position: fixed; display: flex; justify-content: center; align-items: center; left: 25vw; font-size: 36px;}
+#result > button {width: 20vw; padding: 10px; font-size: 24px; font-weight: bold; border-radius: 10vw; background: #00472f; border: 3px solid #fff; position: fixed; right: 10vw;}

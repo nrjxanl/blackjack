@@ -92,7 +92,8 @@ function sum_total(a,types) {
             for(i = 0;i<A_case[total[3]].length;i++) {
                 temp.push(total[1] + A_case[total[3]][i] <= 21? (total[1] + A_case[total[3]][i]) : 0)
             }
-            total[1] = Math.max.apply(null, temp) //total[1] == 0이면 딜러 패배 처리 필요
+            total[1] = Math.max.apply(null, temp) == 0 ?
+            total[1] + total[3] : Math.max.apply(null, temp)
         }
     }
 }

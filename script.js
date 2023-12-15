@@ -72,17 +72,17 @@ function sum_total(a,types) {
             continue;
         }
     }
-    if (total[types+2]==1 && total[types] ==10 && a.length()==2){
+    if (total[types+2]==1 && total[types] ==10 && a.length==2){
         blackjack[types] = 1            
         if(types == 0) {
             $("#playerPoint > p").empty()
-            $("#playerPoint > p").append(total[0] + "점 + A " + total[2] + "개")
+            $("#playerPoint > p").append("blackjack")
             stand()
             return
         }
     }
     if (types == 1) {
-        if (total[3] == 1 && total[1][0].substring(1)=='6' && a.length()==2) {
+        if (total[3] == 1 && total[1]==6 && a.length==2) {
             softhit = true
         } else {
             softhit = false
@@ -255,7 +255,7 @@ function game_result(status) {
             $("#result").html("<p>플레이어 승리</p><p>플레이어: blackjack</p>")
         }
     } else {
-        $("#result").html("<p>무승부</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p>")
+        $("#result").html("<p>무승부</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><button onclick='reset()'>다시 시작하기</button>")
     }
     $("#result").css("display", "flex");
 

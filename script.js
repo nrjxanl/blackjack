@@ -252,16 +252,14 @@ function stand() {
                 continue
             }
             $("#selectPoint > div:nth-of-type(1)").append("<button id='"+ i + "' onclick='selectPoint(this.id)'>" + A_case[total[2]][i] + "점</button>")
-            $("#dealerPoint > p:nth-of-type(1)").empty()
-            $("#dealerPoint > p:nth-of-type(1)").append(total[1] + "점")
         }
     } else {
         sum_total(d_deck, 1)
         $("#dealer > div:nth-of-type(2) > img:nth-of-type(2)").animate({opacity: 0}, 300)
         setTimeout(function(){dealer_action()},1500)
-        $("#dealerPoint > p:nth-of-type(1)").empty()
-        $("#dealerPoint > p:nth-of-type(1)").append(total[1] + "점")
     }
+    $("#dealerPoint > p:nth-of-type(1)").empty()
+    $("#dealerPoint > p:nth-of-type(1)").append(total[1] + "점")
 
 }
 

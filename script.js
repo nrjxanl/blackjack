@@ -348,14 +348,14 @@ function reset() {
 
 function game_result(status) {
     if (status == 0) {
-        $("#result").html("<p>딜러 승리</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><button onclick='reset()'>다시 시작하기</button>")
+        $("#result").html("<p>딜러 승리</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><p>- " + inputValue + "</p><button onclick='reset()'>다시 시작하기</button>")
     } else if (status == 1) {
         $("#result").html("<p>플레이어 승리</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><p>+ " + inputValue + "</p><button onclick='reset()'>다시 시작하기</button>")
     } else if(status>1) {
         if (status == 2) {
-            $("#result").html("<p>딜러 승리</p><p>딜러: BlackJack</p><button onclick='reset()'>다시 시작하기</button>")
+            $("#result").html("<p>딜러 승리</p><p>딜러: BlackJack</p><p>- " + inputValue + "</p><button onclick='reset()'>다시 시작하기</button>")
         } else {
-            $("#result").html("<p>플레이어 승리</p><p>플레이어: BlackJack</p><button onclick='reset()'>다시 시작하기</button>")
+            $("#result").html("<p>플레이어 승리</p><p>플레이어: BlackJack</p><p>+ " + inputValue + "</p><button onclick='reset()'>다시 시작하기</button>")
         }
     } else {
         if (blackjack[0]+blackjack[1]==2) {

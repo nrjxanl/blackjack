@@ -251,16 +251,18 @@ function stand() {
             if(total[0]+A_case[total[2]][i]>21) {
                 continue
             }
-            $("#selectPoint > div").append("<button id='"+ i + "' onclick='selectPoint(this.id)'>" + A_case[total[2]][i] + "점</button>")
+            $("#selectPoint > div:nth-of-type(1)").append("<button id='"+ i + "' onclick='selectPoint(this.id)'>" + A_case[total[2]][i] + "점</button>")
+            $("#dealerPoint > p:nth-of-type(1)").empty()
+            $("#dealerPoint > p:nth-of-type(1)").append(total[1] + "점")
         }
     } else {
         sum_total(d_deck, 1)
         $("#dealer > div:nth-of-type(2) > img:nth-of-type(2)").animate({opacity: 0}, 300)
         setTimeout(function(){dealer_action()},1500)
+        $("#dealerPoint > p:nth-of-type(1)").empty()
+        $("#dealerPoint > p:nth-of-type(1)").append(total[1] + "점")
     }
 
-    $("#dealerPoint > p:nth-of-type(1)").empty()
-    $("#dealerPoint > p:nth-of-type(1)").append(total[1] + "점")
 }
 
 function selectPoint(value){
@@ -293,16 +295,16 @@ function dealer_action() {
                 $("#dealer > div:nth-of-type(" + y + ") > img:nth-of-type(1)").animate({opacity: 1}, 0, function() {
                     $("#dealer > div:nth-of-type(" + y + ") > img:nth-of-type(2)").animate({opacity: 0}, 300, function() {
                         y += 1
+                        $("#dealerPoint > p:nth-of-type(1)").empty()
+                        $("#dealerPoint > p:nth-of-type(1)").append(total[1] + "점")
                     })
                 })
             }, 500)
             sum_total(d_deck,1)
-            $("#dealerPoint > p:nth-of-type(1)").empty()
-            $("#dealerPoint > p:nth-of-type(1)").append(total[1] + "점")
         }, 300)
 
         var timer = setTimeout(function(){dealer_action()}, 1000)
-    }
+    }console.log(blackjack)
     if ((total[1] >= 17 || total[1] == 0) && !softhit) {
         if (blackjack == [1,0]) {
             clearTimeout(timer)
@@ -353,13 +355,13 @@ function game_result(status) {
         $("#result").html("<p>플레이어 승리</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><p>+ " + inputValue + "</p><button onclick='reset()'>다시 시작하기</button>")
     } else if(status>1) {
         if (status == 2) {
-            $("#result").html("<p>딜러 승리</p><p>딜러: blackjack</p><button onclick='reset()'>다시 시작하기</button>")
+            $("#result").html("<p>딜러 승리</p><p>딜러: BlackJack</p><button onclick='reset()'>다시 시작하기</button>")
         } else {
-            $("#result").html("<p>플레이어 승리</p><p>플레이어: blackjack</p><button onclick='reset()'>다시 시작하기</button>")
+            $("#result").html("<p>플레이어 승리</p><p>플레이어: BlackJack</p><button onclick='reset()'>다시 시작하기</button>")
         }
     } else {
         if (blackjack[0]+blackjack[1]==2) {
-            $("#result").html("<p>무승부</p><p>플레이어: blackjack<br>딜러: blackjack</p><button onclick='reset()'>다시 시작하기</button>")
+            $("#result").html("<p>무승부</p><p>플레이어: BlackJack<br>딜러: BlackJack</p><button onclick='reset()'>다시 시작하기</button>")
         } else {
             $("#result").html("<p>무승부</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><button onclick='reset()'>다시 시작하기</button>")    
         }

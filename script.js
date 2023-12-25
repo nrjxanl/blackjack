@@ -348,21 +348,21 @@ function reset() {
 
 function game_result(status) {
     if (status == 0) {
-        if ((total[0] == 21 && total[2] == 1) || (total[0] >= 20 && total[0] <= 21 && total[2] == 2)) {
-            $("#result").html("<p>딜러 승리</p><p>플레이어: " + total[0] + "점 + A " + total[2] + "개<br>딜러: " + total[1] + "점</p><button onclick='reset()'>다시 시작하기</button>")
-        } else {
-            $("#result").html("<p>딜러 승리</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><button onclick='reset()'>다시 시작하기</button>")
-        }
+        $("#result").html("<p>딜러 승리</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><button onclick='reset()'>다시 시작하기</button>")
     } else if (status == 1) {
         $("#result").html("<p>플레이어 승리</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><p>+ " + inputValue + "</p><button onclick='reset()'>다시 시작하기</button>")
-    } else if(status > 1) {
+    } else if(status>1) {
         if (status == 2) {
-            $("#result").html("<p>딜러 승리</p><p>딜러: BlackJack</p>")
+            $("#result").html("<p>딜러 승리</p><p>딜러: blackjack</p><button onclick='reset()'>다시 시작하기</button>")
         } else {
-            $("#result").html("<p>플레이어 승리</p><p>플레이어: BlackJack</p>")
+            $("#result").html("<p>플레이어 승리</p><p>플레이어: blackjack</p><button onclick='reset()'>다시 시작하기</button>")
         }
     } else {
-        $("#result").html("<p>무승부</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><button onclick='reset()'>다시 시작하기</button>")
+        if (blackjack[0]+blackjack[1]==2) {
+            $("#result").html("<p>무승부</p><p>플레이어: blackjack<br>딜러: blackjack</p><button onclick='reset()'>다시 시작하기</button>")
+        } else {
+            $("#result").html("<p>무승부</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><button onclick='reset()'>다시 시작하기</button>")    
+        }
     }
     $("#result").css("display", "flex")
 
@@ -372,7 +372,6 @@ function game_result(status) {
     $("#hit").css("display", "none")
     $("#stand").css("display", "none")
 }
-
 function reset() {
     window.location.reload()
 }

@@ -98,7 +98,7 @@ function start() {
     document.getElementById("stand").disabled = true
 
     // 화면 좌측 상단에 베팅 금액 띄우기
-    $("#betPrice").text("베팅 금액: " + inputValue + "원")
+    $("#betPrice").text("베팅 코인: " + inputValue + "개")
     $("#bet").css("display", "none")
     $("#betPrice").css("display", "block")
     $("#playerPoint").css("display", "block")

@@ -19,41 +19,41 @@ function shuffle(array) {
     array.sort(() => Math.random() - 0.5)
 }
 
-// 베팅 금액 초기값을 100원으로 지정 - inputValue
+// 베팅 금액 초기값을 1원으로 지정 - inputValue
 window.onload = function() {
-    inputValue = 100
-    $("#input").text(inputValue + "원")
+    inputValue = 1
+    $("#input").text(inputValue + "개")
     $("#down").css("opacity", ".8")
 }
 
-// up 버튼 누르면 베팅 금액 100원씩 올리고 inputValue에 그 값 저장하기
+// up 버튼 누르면 베팅 금액 1원씩 올리고 inputValue에 그 값 저장하기
 function up() {
-    inputValue += 100
-    $("#input").text(inputValue + "원")
+    inputValue += 1
+    $("#input").text(inputValue + "개")
 
-    // 베팅 금액이 100원보다 클 때 down 버튼 활성화(css에서 기본적으로 클릭하지 못하도록 설정해 둠)
-    if (inputValue > 100) {
+    // 베팅 금액이 1원보다 클 때 down 버튼 활성화(css에서 기본적으로 클릭하지 못하도록 설정해 둠)
+    if (inputValue > 1) {
         $("#down").css({"pointer-events": "all", "opacity": "1"})
     }
 
-    // 베팅 금액이 1000원일 때 up 버튼 비활성화
-    if (inputValue >= 1000) {
+    // 베팅 금액이 5원일 때 up 버튼 비활성화
+    if (inputValue >= 5) {
         $("#up").css({"pointer-events": "none", "opacity": ".8"})
     }
 }
 
-// down 버튼 누르면 베팅 금액 100원씩 내리고 inputValue에 그 값 저장하기
+// down 버튼 누르면 베팅 금액 1원씩 내리고 inputValue에 그 값 저장하기
 function down() {
-    inputValue -= 100
-    $("#input").text(inputValue + "원")
+    inputValue -= 1
+    $("#input").text(inputValue + "개")
     
-    // 베팅 금액이 100원일 때 down 버튼 비활성화
-    if (inputValue == 100) {
+    // 베팅 금액이 1원일 때 down 버튼 비활성화
+    if (inputValue == 1) {
         $("#down").css({"pointer-events": "none", "opacity": ".8"})
     }
 
-    // 베팅 금액이 1000원보다 작을 때 up 버튼 활성화
-    if (inputValue < 1000) {
+    // 베팅 금액이 5원보다 작을 때 up 버튼 활성화
+    if (inputValue < 5) {
         $("#up").css({"pointer-events": "all", "opacity": "1"})
     }
 }
@@ -375,18 +375,18 @@ function reset() {
 
 function game_result(status) {
     if (status == 0) {
-        $("#result").html("<p>딜러 승리</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><button onclick='reset()'>다시 시작하기</button>")
+        $("#result").html("<p>패배</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><p>- " + inputValue + "</p><button onclick='reset()'>다시 시작하기</button>")
     } else if (status == 1) {
-        $("#result").html("<p>플레이어 승리</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><p>+ " + inputValue + "</p><button onclick='reset()'>다시 시작하기</button>")
+        $("#result").html("<p>승리</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><p>+ " + inputValue + "</p><button onclick='reset()'>다시 시작하기</button>")
     } else if(status>1) {
         if (status == 2) {
-            $("#result").html("<p>딜러 승리</p><p>딜러: blackjack</p><button onclick='reset()'>다시 시작하기</button>")
+            $("#result").html("<p>패배</p><p>딜러: BlackJack</p><p>- " + inputValue + "</p><button onclick='reset()'>다시 시작하기</button>")
         } else {
-            $("#result").html("<p>플레이어 승리</p><p>플레이어: blackjack</p><button onclick='reset()'>다시 시작하기</button>")
+            $("#result").html("<p>승리</p><p>플레이어: BlackJack</p><p>+ " + inputValue + "</p><button onclick='reset()'>다시 시작하기</button>")
         }
     } else {
         if (blackjack[0]+blackjack[1]==2) {
-            $("#result").html("<p>무승부</p><p>플레이어: blackjack<br>딜러: blackjack</p><button onclick='reset()'>다시 시작하기</button>")
+            $("#result").html("<p>무승부</p><p>플레이어: BlackJack<br>딜러: BlackJack</p><button onclick='reset()'>다시 시작하기</button>")
         } else {
             $("#result").html("<p>무승부</p><p>플레이어: " + total[0] + "점<br>딜러: " + total[1] + "점</p><button onclick='reset()'>다시 시작하기</button>")    
         }

@@ -257,7 +257,7 @@ function stand() {
             if(total[0]+A_case[total[2]][i]>21) {
                 continue
             }
-            $("#selectPoint > div").append("<button id='"+ i + "' onclick='selectPoint(this.id)'>" + A_case[total[2]][i] + "점</button>")
+            $("#selectPoint > div:nth-of-type(1)").append("<button id='"+ i + "' onclick='selectPoint(this.id)'>" + A_case[total[2]][i] + "점</button>")
         }
     } else {
         $("#dealer > div:nth-of-type(2) > img:nth-of-type(2)").animate({opacity: 0}, 300)

@@ -18,7 +18,6 @@ shuffle(deck)
 function shuffle(array) {
     array.sort(() => Math.random() - 0.5)
 }
-console.log(deck)
 
 // 베팅 금액 초기값을 100원으로 지정 - inputValue
 window.onload = function() {
@@ -165,7 +164,6 @@ function start() {
                 $("#player > div:nth-of-type(2) > img:nth-of-type(2)").animate({opacity: 0}, 300)
             })
         }, 500)
-
         sum_total(p_deck,0)
 
         // 딜러 2
@@ -179,7 +177,6 @@ function start() {
         leftOffset = $("#dealer > div:nth-of-type(2) > img:nth-of-type(1)").position().left
         margin = $("#dealer > div:nth-of-type(2)").css("margin-left").replace("px", "")
         $("#dealer > div:nth-of-type(2) > img:nth-of-type(2)").animate({top: topOffset, left: leftOffset}, 500)
-
         sum_total(d_deck,1)
 
         setTimeout(function() {
@@ -239,6 +236,7 @@ function hit() {
                 //21 넘을 시 게임 종료
             })
             if (total[0]+total[2] > 21) {
+                total[0] = total[0]+total[2]
                 game_result(0)
                 return
             }
@@ -312,7 +310,7 @@ function dealer_action() {
 
         var timer = setTimeout(function(){dealer_action()}, 1000)
     }
-    if ((total[1] >= 17 || total[1] == 0)||(blackjack[1]<blackjack[0])) {
+    if (((total[1] >= 17 || total[1] == 0)||(blackjack[1]<blackjack[0]))&&!softhit) {
         switch(blackjack[0]+blackjack[1]) {
             case 1:
                 if(blackjack[0]==1) {
